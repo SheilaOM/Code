@@ -30,7 +30,7 @@ class myContentHandler(ContentHandler):
                 self.inContent = True
             elif name == 'link':
                 self.inContent = True
-            
+
     def endElement (self, name):
         if name == 'item':
             self.inItem = False
@@ -38,7 +38,7 @@ class myContentHandler(ContentHandler):
             if name == 'title':
                 line = "Title: " + self.theContent + "."
                 # To avoid Unicode trouble
-                print line.encode('utf-8') 
+                print line.encode('utf-8')
                 self.inContent = False
                 self.theContent = ""
             elif name == 'link':
@@ -49,7 +49,7 @@ class myContentHandler(ContentHandler):
     def characters (self, chars):
         if self.inContent:
             self.theContent = self.theContent + chars
-            
+
 # --- Main prog
 
 if len(sys.argv)<2:
@@ -57,7 +57,7 @@ if len(sys.argv)<2:
     print
     print " <document>: file name of the document to parse"
     sys.exit(1)
-    
+
 # Load parser and driver
 
 theParser = make_parser()
@@ -66,7 +66,20 @@ theParser.setContentHandler(theHandler)
 
 # Ready, set, go!
 
-xmlFile = open(sys.argv[1],"r")
+xmlFile = open(sys.argv[1],"r")    #urllib que me de descriptor de string
 theParser.parse(xmlFile)
 
 print "Parse complete"
+
+
+
+
+#<html>
+#    <body>
+#        <ul>
+#            <li><a href=.......></li>
+#               ..........todos los titulos    
+
+#        </ul>
+#    </body>
+#</html>
